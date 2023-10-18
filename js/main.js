@@ -3,7 +3,16 @@ let computerSelection = getComputerChoice();
 let playerSelection = getPlayerChoice();
 
 console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`); // display computerSelection and playerSelection
-console.log(`Result: ${playRound(computerSelection, playerSelection)}`); // display result
+
+if (
+  playerSelection === "rock" ||
+  playerSelection === "paper" ||
+  playerSelection === "scissors"
+) {
+  console.log(`Result: ${playRound(computerSelection, playerSelection)}`); // display result
+} else {
+  console.log("The game wasn't played."); // clunky but functional way to avoid result = undefined
+}
 
 // computerChoice
 function getComputerChoice() {
@@ -21,13 +30,22 @@ function getComputerChoice() {
 
 // playerChoice
 function getPlayerChoice() {
-  let playerSelection;
   let playerChoice = prompt("Please enter 'rock', 'paper' or 'scissors'.");
-  if (playerChoice) {
-    playerSelection = playerChoice.toLowerCase().trim();
-    return playerSelection;
-  } else {
+
+  if (playerChoice === null) {
     alert("Maybe next time."); // if the prompt is cancelled
+    return "The user cancelled the game.";
+  } else {
+    playerChoice = playerChoice.toLowerCase().trim();
+    if (
+      playerChoice !== "rock" &&
+      playerChoice !== "paper" &&
+      playerChoice !== "scissors"
+    ) {
+      alert("You didn't enter 'rock', 'paper' or 'scissors'!");
+      return getPlayerChoice(); // Repeat the function and return the result
+    }
+    return playerChoice; // Return the valid choice
   }
 }
 
