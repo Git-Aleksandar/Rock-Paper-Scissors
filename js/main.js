@@ -23,8 +23,12 @@ function getComputerChoice() {
 function getPlayerChoice() {
   let playerSelection;
   let playerChoice = prompt("Please enter 'rock', 'paper' or 'scissors'.");
-  playerSelection = playerChoice.toLowerCase().trim();
-  return playerSelection;
+  if (playerChoice) {
+    playerSelection = playerChoice.toLowerCase().trim();
+    return playerSelection;
+  } else {
+    alert("Maybe next time."); // if the prompt is cancelled
+  }
 }
 
 // playRound
