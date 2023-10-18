@@ -1,8 +1,8 @@
 // Play
 let computerSelection = getComputerChoice();
-let playerSelection = "rock"; // play here!
+let playerSelection = getPlayerChoice();
 
-console.log(computerSelection); // display computerSelection
+console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`); // display computerSelection and playerSelection
 console.log(`Result: ${playRound(computerSelection, playerSelection)}`); // display result
 
 // computerChoice
@@ -17,6 +17,14 @@ function getComputerChoice() {
     computerChoice = "scissors";
   }
   return computerChoice;
+}
+
+// playerChoice
+function getPlayerChoice() {
+  let playerSelection;
+  let playerChoice = prompt("Please enter 'rock', 'paper' or 'scissors'.");
+  playerSelection = playerChoice.toLowerCase().trim();
+  return playerSelection;
 }
 
 // playRound
