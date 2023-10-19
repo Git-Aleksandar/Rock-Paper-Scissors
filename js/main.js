@@ -1,15 +1,69 @@
-// Play
-function playGame() {
-  let computerSelection = getComputerChoice();
-  let playerSelection = getPlayerChoice();
+// Call the game
+playGame(5);
 
-  console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`);
+// Play Game
+function playGame(rounds) {
+  let computerScore = 0;
+  let userScore = 0;
 
-  const roundResult = playRound(computerSelection, playerSelection);
-  console.log(`Result: ${roundResult}`);
+  for (let i = 0; i < rounds; i++) {
+    let computerSelection = getComputerChoice();
+    let playerSelection = getPlayerChoice();
+
+    // if the user cancels the prompt
+    if (playerSelection === "The user cancelled the game.") {
+      alert("Maybe next time.");
+      return; // stop further code execution
+    }
+
+    console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`);
+
+    const roundResult = playRound(computerSelection, playerSelection);
+    console.log(`Result: ${roundResult}`);
+
+    // keeping score
+    if (roundResult.includes("You Lose")) {
+      computerScore += 1;
+    } else if (roundResult.includes("You Win")) {
+      userScore += 1;
+    }
+
+    // If either player reaches the required score, exit the loop
+    if (computerScore >= rounds || userScore >= rounds) {
+      break;
+    }
+  }
+
+  // If the game is tied after all rounds, play one more round to determine the overall winner
+  if (computerScore === userScore) {
+    let computerSelection = getComputerChoice();
+    let playerSelection = getPlayerChoice();
+
+    if (playerSelection === "The user cancelled the game.") {
+      alert("Maybe next time.");
+      return;
+    }
+
+    console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`);
+
+    const roundResult = playRound(computerSelection, playerSelection);
+    console.log(`Result: ${roundResult}`);
+
+    // Determine the overall game result after the extra round
+    if (roundResult.includes("You Lose")) {
+      computerScore += 1;
+    } else if (roundResult.includes("You Win")) {
+      userScore += 1;
+    }
+  }
+
+  // Determine the overall game result after all rounds and the extra round
+  if (computerScore > userScore) {
+    console.log("Final result: Computer wins the game!");
+  } else if (userScore > computerScore) {
+    console.log("Final result: You win the game!");
+  }
 }
-
-playGame(); // Call playGame to play a single round
 
 // computerChoice
 function getComputerChoice() {
@@ -30,7 +84,7 @@ function getPlayerChoice() {
   let playerChoice = prompt("Please enter 'rock', 'paper' or 'scissors'.");
 
   if (playerChoice === null) {
-    alert("Maybe next time."); // if the prompt is cancelled
+    // alert("Maybe next time."); // if the prompt is cancelled (relocated to the playGame(rounds) function, you can remove it from here)
     return "The user cancelled the game.";
   } else {
     playerChoice = playerChoice.toLowerCase().trim();
