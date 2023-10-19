@@ -1,18 +1,15 @@
 // Play
-let computerSelection = getComputerChoice();
-let playerSelection = getPlayerChoice();
+function playGame() {
+  let computerSelection = getComputerChoice();
+  let playerSelection = getPlayerChoice();
 
-console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`); // display computerSelection and playerSelection
+  console.log(`User: ${playerSelection}\nComputer: ${computerSelection}`);
 
-if (
-  playerSelection === "rock" ||
-  playerSelection === "paper" ||
-  playerSelection === "scissors"
-) {
-  console.log(`Result: ${playRound(computerSelection, playerSelection)}`); // display result
-} else {
-  console.log("The game wasn't played."); // clunky but functional way to avoid result = undefined
+  const roundResult = playRound(computerSelection, playerSelection);
+  console.log(`Result: ${roundResult}`);
 }
+
+playGame(); // Call playGame to play a single round
 
 // computerChoice
 function getComputerChoice() {
@@ -52,6 +49,10 @@ function getPlayerChoice() {
 // playRound
 function playRound(computerSelection, playerSelection) {
   let result;
+
+  if (playerSelection === "The user cancelled the game.") {
+    return "The game wasn't played."; // logged result if the prompt is cancelled
+  }
 
   if (computerSelection === playerSelection) {
     result = "Tie Game!"; // tie game scenario
