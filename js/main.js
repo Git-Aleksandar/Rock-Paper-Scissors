@@ -1,5 +1,23 @@
-// Call the game
-playGame(5);
+game();
+
+// Ask the user ti input how many rounds they want to play
+function game() {
+  const roundsInput = prompt("How many rounds would you like to play?");
+  // parseInt... might be useful if the user enters a number enclosed in quotes - "10" for example. Not necessary for this simple exercise
+  const rounds = parseInt(roundsInput, 10);
+
+  if (roundsInput === null) {
+    alert("Maybe next time.");
+  }
+  // check if the input is a positive number
+  else if (!isNaN(rounds) && rounds > 0) {
+    playGame(rounds);
+  } else {
+    alert("Please enter a positive number for the number of rounds!");
+    // location.reload(); // no need to reload the whole page, just call the initial  function again
+    game();
+  }
+}
 
 // Play Game
 function playGame(rounds) {
@@ -62,6 +80,14 @@ function playGame(rounds) {
     console.log("Final result: Computer wins the game!");
   } else if (userScore > computerScore) {
     console.log("Final result: You win the game!");
+  }
+
+  // ask the user if they want to play a new game
+  const playAgain = confirm("Do you want to play again?");
+  if (playAgain) {
+    game();
+  } else {
+    alert("OK! Maybe next time!");
   }
 }
 
