@@ -58,6 +58,7 @@ function playRound(computerSelection, playerSelection) {
       .charAt(0)
       .concat(computerSelection.slice(1)); // capitalize the first letter of the second sentence
     result = `You Lose! ${computerSelection} beats ${playerSelection}!`;
+    computerScore += 1; // increment the computerScore;
   }
   // player wins scenario
   else if (
@@ -70,11 +71,28 @@ function playRound(computerSelection, playerSelection) {
       .charAt(0)
       .concat(playerSelection.slice(1)); // capitalize the first letter of the second sentence
     result = `You Win! ${playerSelection} beats ${computerSelection}!`;
+    playerScore += 1; // increment the playerScore
   }
 
   displayResult.textContent = result;
+
+  displayComputerScore.textContent = `Computer: ${computerScore}`;
+  displayPlayerScore.textContent = `Player: ${playerScore}`;
+
+  if (computerScore === 5) {
+    displayFinalScore.textContent = "Computer wins the game!";
+  } else if (playerScore === 5) {
+    displayFinalScore.textContent = "You win the game!";
+  }
 }
 
+let computerScore = 0;
+let playerScore = 0;
+
 const displayResult = document.querySelector("#result");
+const displayFinalScore = document.querySelector("#finalScore");
+
+const displayComputerScore = document.querySelector("#computerScore");
+const displayPlayerScore = document.querySelector("#playerScore");
 
 getPlayerChoice();
