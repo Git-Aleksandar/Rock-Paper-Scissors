@@ -1,19 +1,3 @@
-// computerChoice
-function getComputerChoice() {
-  let randomNumber = Math.floor(Math.random() * 3) + 1;
-
-  let computerSelection;
-
-  if (randomNumber === 1) {
-    computerSelection = "rock";
-  } else if (randomNumber === 2) {
-    computerSelection = "paper";
-  } else {
-    computerSelection = "scissors";
-  }
-  return computerSelection;
-}
-
 // playerChoice
 function getPlayerChoice() {
   let playerSelection;
@@ -40,10 +24,26 @@ function getPlayerChoice() {
   });
 }
 
+// computerChoice
+function getComputerChoice() {
+  let randomNumber = Math.floor(Math.random() * 3) + 1;
+
+  let computerSelection;
+
+  if (randomNumber === 1) {
+    computerSelection = "rock";
+  } else if (randomNumber === 2) {
+    computerSelection = "paper";
+  } else {
+    computerSelection = "scissors";
+  }
+  return computerSelection;
+}
+
 // playRound
 function playRound(computerSelection, playerSelection) {
   if (gameOver) {
-    return; // discontinue the game
+    return; // discontinue the game if either player reaches 5
   }
 
   let result;
@@ -86,9 +86,11 @@ function playRound(computerSelection, playerSelection) {
   if (computerScore === 5) {
     displayFinalScore.textContent = "Computer wins the game!";
     gameOver = true;
+    createPlayAgainBtn(); // call the function to create the btn
   } else if (playerScore === 5) {
     displayFinalScore.textContent = "You win the game!";
     gameOver = true;
+    createPlayAgainBtn(); // call the function to create the btn
   }
 }
 
@@ -96,10 +98,41 @@ let computerScore = 0;
 let playerScore = 0;
 let gameOver = false; // discontinue the game after either player reaches 5
 
+const displayComputerScore = document.querySelector("#computerScore");
+displayComputerScore.textContent = `Computer: ${computerScore}`;
+const displayPlayerScore = document.querySelector("#playerScore");
+displayPlayerScore.textContent = `Player: ${playerScore}`;
+
 const displayResult = document.querySelector("#result");
 const displayFinalScore = document.querySelector("#finalScore");
+const displayPlayAgainBtn = document.querySelector("#playAgain");
 
-const displayComputerScore = document.querySelector("#computerScore");
-const displayPlayerScore = document.querySelector("#playerScore");
+// Create playAgain button to reset the game
+function createPlayAgainBtn() {
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play again?";
+  displayPlayAgainBtn.appendChild(playAgainBtn);
+
+  playAgainBtn.addEventListener("click", () => {
+    resetGame();
+  });
+
+  function resetGame() {
+    computerScore = 0;
+    playerScore = 0;
+    gameOver = false;
+
+    displayResult.textContent = "";
+    displayFinalScore.textContent = "";
+
+    displayComputerScore.textContent = "Computer: 0";
+    displayPlayerScore.textContent = "Player: 0";
+
+    const playAgainBtn = displayPlayAgainBtn.querySelector("button");
+    if (playAgainBtn) {
+      playAgainBtn.remove(); // remove the button when clicked and prevent creating new buttons after each round
+    }
+  }
+}
 
 getPlayerChoice();
