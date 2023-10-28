@@ -42,6 +42,10 @@ function getPlayerChoice() {
 
 // playRound
 function playRound(computerSelection, playerSelection) {
+  if (gameOver) {
+    return; // discontinue the game
+  }
+
   let result;
 
   if (computerSelection === playerSelection) {
@@ -81,13 +85,16 @@ function playRound(computerSelection, playerSelection) {
 
   if (computerScore === 5) {
     displayFinalScore.textContent = "Computer wins the game!";
+    gameOver = true;
   } else if (playerScore === 5) {
     displayFinalScore.textContent = "You win the game!";
+    gameOver = true;
   }
 }
 
 let computerScore = 0;
 let playerScore = 0;
+let gameOver = false; // discontinue the game after either player reaches 5
 
 const displayResult = document.querySelector("#result");
 const displayFinalScore = document.querySelector("#finalScore");
