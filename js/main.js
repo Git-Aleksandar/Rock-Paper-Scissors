@@ -72,7 +72,9 @@ function playRound(computerSelection, playerSelection) {
     result = `You Win! ${playerSelection} beats ${computerSelection}!`;
   }
 
-  console.log(result);
+  displayResult.textContent = result;
 }
+
+const displayResult = document.querySelector("#result");
 
 getPlayerChoice();
